@@ -1,0 +1,20 @@
+{
+  "name": "js-sandbox-2024",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "npm install",
+    "ci": "npm ci",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "dependencies": {
+    "ascii-art": "^2.8.5"
+  }
+}
