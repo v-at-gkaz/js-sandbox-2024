@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npm install",
-    "ci": "npm ci",
+    "example-install": "npm install",
+    "example-ci": "npm ci",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
