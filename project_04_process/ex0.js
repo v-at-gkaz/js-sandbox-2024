@@ -1,15 +1,15 @@
-import process from 'node:process';
-import {env} from 'node:process';
+import {env, stdout, stderr, exit} from 'node:process';
 
 // reading env
-console.log('ENV?', env.PATH);
-
+console.log('ENV.PATH:', env.PATH);
 
 // exit code example
 if(Boolean(+((new Date()).getSeconds())%2)) {
-    process.exit(0);
+    stdout.write('Stdout 0 detected');
+    exit(0);
 } else {
-    process.exit(42);
+    stderr.write('Stderr 42 detected');
+    exit(42);
 }
 
 // test:
