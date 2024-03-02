@@ -1,0 +1,13 @@
+{
+  "name": "project_06_env",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file=.env ex0.js",
+    "dev": "node --env-file=.env_dev ex0.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
