@@ -6,11 +6,14 @@
   "type": "module",
   "scripts": {
     "start": "PORT=5000 node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon ex4_formidable.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "formidable": "^3.5.1"
   }
 }
