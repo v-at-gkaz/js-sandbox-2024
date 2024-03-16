@@ -15,7 +15,9 @@ app.use(bodyParser.json());
 const port = 3000;
 app.get('/api/v1.0/contacts', (req, res) => {
     const allData = db.getAll();
-    res.send(allData);
+    setTimeout(()=>{
+        res.send(allData);
+    }, 3000);
 });
 app.get('/api/v1.0/contacts/:id', (req, res) => {
     const id = Number(req.params.id);
