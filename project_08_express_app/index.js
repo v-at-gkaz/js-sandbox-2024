@@ -76,7 +76,7 @@ app.patch('/api/v1.0/contacts/:id', (req, res) => {
         return;
     }
 
-    res.status(201);
+    res.status(200);
     res.send(data);
 });
 
