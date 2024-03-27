@@ -1,131 +1,81 @@
-import express from 'express';
+import express from "express";
 import DatabaseService from "./database-service.js";
 import bodyParser from "body-parser";
+
 const db = new DatabaseService();
 const app = express();
 
 app.use(express.static('public'));
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 // parse application/json
 app.use(bodyParser.json());
 
 const port = 3000;
-app.get('/api/v1.0/contacts', (req, res) => {
-    const allData = db.getAll();
-    setTimeout(()=>{
-        res.send(allData);
-    }, 3000);
+app.get('/api/v1.0/contacts', async (req, res) => {
+    try {
+        const oneItem = await db.getAll();
+        res.send(oneItem);
+    } catch (e) {
+        res.status(500);
+        res.send(e);
+    }
 });
-app.get('/api/v1.0/contacts/:id', (req, res) => {
+app.get('/api/v1.0/contacts/:id', async (req, res) => {
     const id = Number(req.params.id);
-
-    if(!id){
+    try {
+        const oneItem = await db.getOne(id);
+        res.send(oneItem);
+    } catch (e) {
         res.status(500);
-        res.send({error: 'Error 500'});
-        return;
+        res.send(e);
     }
-
-    const oneItem = db.getOne(id);
-
-    if(!oneItem){
-        res.status(404);
-        res.send({error: `Item with id=${id} not found`});
-        return;
-    }
-    res.send(oneItem);
 });
 
-app.post('/api/v1.0/contacts/', (req, res) => {
+app.post('/api/v1.0/contacts/', async (req, res) => {
 
-    const data= req.body;
+    const data = req.body;
 
-    if(!db.create(data)) {
+    try {
+        const createdItem = await db.create(data);
+        res.status(201);
+        res.send(createdItem);
+    } catch (e) {
         res.status(500);
-        res.send({error: `Error 500 when creating item with id ${id}`});
-        return;
+        res.send(e);
     }
-
-    res.status(201);
-    res.send(data);
 });
 
-app.patch('/api/v1.0/contacts/:id', (req, res) => {
+app.patch('/api/v1.0/contacts/:id', async (req, res) => {
 
     const id = Number(req.params.id);
+    const data = req.body;
 
-    if(!id){
+    try {
+        await db.update(id, data);
+        res.status(200);
+        res.send(null);
+    } catch (e) {
         res.status(500);
-        res.send({error: 'Error 500'});
-        return;
+        res.send(e);
     }
-
-    const oneItem = db.getOne(id);
-
-    if(!oneItem){
-        res.status(404);
-        res.send({error: `Item with id=${id} not found`});
-        return;
-    }
-
-    const data= req.body;
-
-    if(!db.update(id, data)) {
-        res.status(500);
-        res.send({error: `Error 500 when updating item with id ${id}`});
-        return;
-    }
-
-    res.status(200);
-    res.send(data);
 });
 
-app.delete('/api/v1.0/contacts/:id', (req, res) => {
+app.delete('/api/v1.0/contacts/:id', async (req, res) => {
     const id = Number(req.params.id);
 
-    if(!id){
-        res.status(500);
-        res.send({error: 'Error 500'});
-        return;
-    }
-
-    const oneItem = db.getOne(id);
-
-    if(!oneItem){
-        res.status(404);
-        res.send({error: `Item with id=${id} not found`});
-        return;
-    }
-
-    if(db.delete(id)) {
+    try {
+       await db.delete(id);
         res.status(204);
-        res.end();
-    } else {
+        res.send(null);
+    } catch (e) {
         res.status(500);
-        res.send({error: `Error 500 when deleting item with id ${id}`});
+        res.send(e);
     }
 });
 
-/*app.get('/api/v1.0/users', (req, res) => {
-    res.send('getAll');
-});
-app.get('/api/v1.0/users/:id', (req, res) => {
-    res.send('getOne');
-});
-
-app.post('/api/v1.0/users/', (req, res) => {
-    res.send('create');
-});
-
-app.patch('/api/v1.0/users/:id', (req, res) => {
-    res.send('patch');
-});
-
-app.delete('/api/v1.0/users/:id', (req, res) => {
-    res.send('delete');
-});*/
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

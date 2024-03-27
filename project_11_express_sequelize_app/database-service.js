@@ -1,9 +1,6 @@
-//import {cwd} from 'node:process';
-//import {join} from 'node:path';
-//import {existsSync, writeFileSync, readFileSync} from 'node:fs';
-import {Sequelize} from "sequelize";
+import {Sequelize, DataTypes} from "sequelize";
 import process, {env, platform, stdin, stdout} from "node:process";
-import * as readline from "readline";
+// import * as readline from "readline"; // Windows 7 ?
 
 const db = env.NODEAPP_DB || 'db';
 const dbUser = env.NODEAPP_USER || 'user1';
@@ -22,21 +19,31 @@ export default class DatabaseService {
             dialect: dbDialect
         });
 
-    //database = [];
-    //filePath = join(cwd(), '..', 'project_08_database.json');
+    Contact = this.sequelize.define('Contact', {
+       name: {
+           type: DataTypes.STRING,
+           allowNull: false
+       },
+        phone: {
+            type: DataTypes.STRING,
+        }
+    },{
+        freezeTableName: true
+    });
 
     constructor() {
 
-        if (platform === "win32") {
-            const rl = readline.createInterface({
-                input: stdin,
-                output: stdout
-            });
-
-            rl.on("SIGINT", function () {
-                process.emit("SIGINT");
-            });
-        }
+        // Windows 7 ?
+        // if (platform === "win32") {
+        //     const rl = readline.createInterface({
+        //         input: stdin,
+        //         output: stdout
+        //     });
+        //
+        //     rl.on("SIGINT", function () {
+        //         process.emit("SIGINT");
+        //     });
+        // }
 
         process.on("SIGINT", async () => {
             try {
@@ -49,85 +56,32 @@ export default class DatabaseService {
             }
         });
 
-        this.sequelize.authenticate().then(()=>{
+        this.sequelize.authenticate().then(async ()=>{
             console.log('Connection has been established successfully.');
+            //await this.sequelize.sync({ force: true });
+            await this.sequelize.sync();
         }).catch((error)=>{
             console.error('Sequelize Error:', error);
         });
-
-
-        // if (existsSync(this.filePath)) {
-        //     try {
-        //         this.database = JSON.parse(readFileSync(this.filePath));
-        //     } catch (e) {
-        //         console.error('DATABASE ERROR', e);
-        //     }
-        // } else {
-        //     writeFileSync(this.filePath, JSON.stringify([]));
-        // }
     }
 
-    getAll() {
-        return []; // this.database;
+    async getAll() {
+        return await this.Contact.findAll();
     }
 
-    getOne(id) {
-       // const found = this.database.find((item) => {
-       //      return item.id === id;
-       //  });
-       // return found;
-        return {};
+    async getOne(id) {
+        return await this.Contact.findOne({where: {id}});
     }
 
-    create(data) {
-        // try {
-        //     this.database.push(data);
-        //     this.storeToDisk();
-        //     return true;
-        // } catch (e) {
-        //     console.error('DATABASE ERROR', e);
-        //     return false;
-        // }
-        return {};
+    async create(data) {
+        return await this.Contact.create({name: data.name, phone: data.phone});
     }
 
-    update(id, data) {
-        // const found = this.database.find((item) => {
-        //     return item.id === id;
-        // });
-        // const foundElIdx = this.database.indexOf(found);
-        // try {
-        //     this.database[foundElIdx]=data;
-        //     this.storeToDisk();
-        //     return true;
-        // } catch (e) {
-        //     console.error('DATABASE ERROR', e);
-        //     return false;
-        // }
-        return {};
+    async update(id, data) {
+        return await this.Contact.update(data, {where: {id}});
     }
 
-    delete(id) {
-        // try {
-        //     this.database = this.database.filter((item) => {
-        //         return item.id !== id;
-        //     });
-        //     this.storeToDisk();
-        //     return true;
-        // } catch (e) {
-        //     console.error('DATABASE ERROR', e);
-        //     return false;
-        // }
-        return true;
+    async delete(id) {
+        return await this.Contact.destroy({where: {id}});
     }
-
-    // storeToDisk() {
-    //     try {
-    //         writeFileSync(this.filePath, JSON.stringify(this.database));
-    //     } catch (e) {
-    //         console.error('DATABASE ERROR', e);
-    //     }
-    // }
-
-
 }

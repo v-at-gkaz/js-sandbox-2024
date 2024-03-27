@@ -3,21 +3,20 @@ import DatabaseService from "./database-service.js";
 const db = new DatabaseService();
 
 const data = {
-    id: 456,
     name: 'Петров Иван',
     phone: '+79990007766'
 };
 
 
-//const oldData = db.getAll();
-//console.log('old data?', oldData);
+const oldData = await db.getAll();
+console.log('old data?', oldData);
 
-//db.create(data);
-//db.update(456, data);
-//db.delete(456);
+//await db.create(data);
+//await db.update(456, data);
+//await db.delete(456);
 
-const oneItem = db.getOne(456);
+const oneItem = await db.getOne(456);
 console.log('oneItem?', oneItem);
 
-const newData = db.getAll();
+const newData = await db.getAll();
 console.log('new data?', newData);
