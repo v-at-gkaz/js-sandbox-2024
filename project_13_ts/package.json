@@ -1,11 +1,12 @@
 {
-  "name": "project_12_jwt",
+  "name": "project_13_ts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "node index.js",
+    "build": "tsc",
     "start_mysql": "node --env-file=.env index.js",
     "start_pg": "node --env-file=.env_pg index.js",
     "dev": "nodemon index.js"
@@ -23,6 +24,8 @@
     "sequelize": "^6.37.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.1.0",
+    "typescript": "^5.4.5"
   }
 }
