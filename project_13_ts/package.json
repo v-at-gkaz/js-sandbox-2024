@@ -9,7 +9,8 @@
     "build": "tsc",
     "start_mysql": "node --env-file=.env index.js",
     "start_pg": "node --env-file=.env_pg index.js",
-    "dev": "nodemon index.js"
+    "dev": "NODEAPP_DB=user NODEAPP_USER=user NODEAPP_PASS=user NODEAPP_DIALECT=mysql PROJECT12_JWT_SECRET=asdfghjklqwertyuio PROJECT12_PORT=3000 ts-node index.ts",
+    "dev:watch": "NODEAPP_DB=user NODEAPP_USER=user NODEAPP_PASS=user NODEAPP_DIALECT=mysql PROJECT12_JWT_SECRET=asdfghjklqwertyuio PROJECT12_PORT=3000 nodemon index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
 }
