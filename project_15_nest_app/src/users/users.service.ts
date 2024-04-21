@@ -6,6 +6,11 @@ import {Repository} from "typeorm";
 import {User} from "./entities/user.entity";
 import {RolesDto} from "./dto/roles.dto";
 import {Role} from "../roles/entities/role.entity";
+import * as bcrypt from "bcrypt";
+import { config } from 'dotenv';
+import {ConfigService} from "@nestjs/config";
+config();
+const configService = new ConfigService();
 
 @Injectable()
 export class UsersService {
@@ -16,20 +21,35 @@ export class UsersService {
   ) {
   }
 
-  create(createUserDto: CreateUserDto) {
-    return this.userRepo.save(createUserDto);
+  async create(createUserDto: CreateUserDto) {
+    const saltOrRounds = +configService.get('PASSWORD_HASH_SALT_OR_ROUNDS', 10);
+    createUserDto.password = await bcrypt.hash(createUserDto.password, saltOrRounds);
+    const createdUser = await this.userRepo.save(createUserDto);
+    delete createdUser.password;
+    return createdUser;
   }
 
   findAll() {
     return this.userRepo.find();
   }
 
-  findOne(id: string) {
-    return this.userRepo.findOne({where: {id}});
+  async findOne(id: string) {
+    const foundUser = await this.userRepo.findOne({where: {id}});
+    delete foundUser.password;
+    return foundUser;
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return this.userRepo.save({...updateUserDto, id});
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = { ...updateUserDto, id };
+    const saltOrRounds = +configService.get('PASSWORD_HASH_SALT_OR_ROUNDS', 10);
+
+    if(user.password) {
+      user.password = await bcrypt.hash(user.password, saltOrRounds);
+    }
+
+    const updatedUser = await this.userRepo.save(user);
+    delete updatedUser.password;
+    return updatedUser;
   }
 
   remove(id: string) {
@@ -45,13 +65,9 @@ export class UsersService {
       for (const roleId of rolesDto.roleIds) {
         roles.push(await this.roleRepo.findOne({where: {id: roleId}}));
       }
-
       // validation ok!
-
       const updatedUser = await this.userRepo.save({...foundUser, roles});
-
-      // TODO: Remove Password!
-
+      delete updatedUser.password;
       return updatedUser;
 
     } catch (err) {
