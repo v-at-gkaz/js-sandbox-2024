@@ -63,7 +63,14 @@ export class UsersService {
       const roles: Array<Role> = [];
 
       for (const roleId of rolesDto.roleIds) {
-        roles.push(await this.roleRepo.findOne({where: {id: roleId}}));
+
+        const found = roles.filter(role=>{
+          return role.id === roleId;
+        });
+
+        if(!found.length){
+          roles.push(await this.roleRepo.findOne({where: {id: roleId}}));
+        }
       }
       // validation ok!
       const updatedUser = await this.userRepo.save({...foundUser, roles});
