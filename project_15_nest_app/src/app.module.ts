@@ -8,6 +8,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import {TypeOrmModuleOptions} from "@nestjs/typeorm/dist/interfaces/typeorm-options.interface";
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { config } from 'dotenv';
+import { AuthModule } from './auth/auth.module';
 
 config();
 
@@ -44,6 +45,7 @@ const ormConfig: TypeOrmModuleOptions = {
       TypeOrmModule.forRoot(ormConfig),
       UsersModule,
       RolesModule,
+      AuthModule,
   ],
   controllers: [],
   providers: [],

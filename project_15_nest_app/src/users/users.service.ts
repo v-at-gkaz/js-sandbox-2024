@@ -12,6 +12,8 @@ import {ConfigService} from "@nestjs/config";
 config();
 const configService = new ConfigService();
 
+const saltOrRounds = +configService.get('PASSWORD_HASH_SALT_OR_ROUNDS', 10);
+
 @Injectable()
 export class UsersService {
 
@@ -19,10 +21,10 @@ export class UsersService {
       @InjectRepository(User) private userRepo: Repository<User>,
       @InjectRepository(Role) private roleRepo: Repository<Role>
   ) {
+    // console.log('UsersService constructor detected >>>>>>>>>>>>>>>>>>>>>>>>>>>>');
   }
 
   async create(createUserDto: CreateUserDto) {
-    const saltOrRounds = +configService.get('PASSWORD_HASH_SALT_OR_ROUNDS', 10);
     createUserDto.password = await bcrypt.hash(createUserDto.password, saltOrRounds);
     const createdUser = await this.userRepo.save(createUserDto);
     delete createdUser.password;
@@ -39,9 +41,27 @@ export class UsersService {
     return foundUser;
   }
 
+  async findUser(username: string, password: string) {
+    try {
+      const foundUser = await this.userRepo.findOne(
+          {
+            select: ['login', 'password'],
+            where: {login: username}
+          });
+      console.log('user?', foundUser);
+      if(await bcrypt.compare(password, foundUser.password)){
+        // FIXME: (Passport!)
+        const { password, ...result } = foundUser;
+        return result;
+      }
+    } catch (e) {
+      return null;
+    }
+
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = { ...updateUserDto, id };
-    const saltOrRounds = +configService.get('PASSWORD_HASH_SALT_OR_ROUNDS', 10);
 
     if(user.password) {
       user.password = await bcrypt.hash(user.password, saltOrRounds);
