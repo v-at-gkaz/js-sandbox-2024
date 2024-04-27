@@ -45,19 +45,18 @@ export class UsersService {
     try {
       const foundUser = await this.userRepo.findOne(
           {
-            select: ['login', 'password'],
+            select: ['id', 'login', 'password'],
             where: {login: username}
           });
-      console.log('user?', foundUser);
+      // console.log('user?', foundUser);
       if(await bcrypt.compare(password, foundUser.password)){
-        // FIXME: (Passport!)
         const { password, ...result } = foundUser;
         return result;
       }
+      return null;
     } catch (e) {
       return null;
     }
-
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

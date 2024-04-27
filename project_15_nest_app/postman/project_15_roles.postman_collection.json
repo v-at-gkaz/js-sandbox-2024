@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e41405be-a680-4e8c-946e-5d2d422e7757",
+		"_postman_id": "c1a1d318-352d-4ca3-a8d0-85a03ff25115",
 		"name": "project_15_roles",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34104660"
+		"_exporter_id": "33653699"
 	},
 	"item": [
 		{
@@ -38,6 +38,16 @@
 		{
 			"name": "Получение по id",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -115,6 +125,16 @@
 		{
 			"name": "Удаление роли по id",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": {

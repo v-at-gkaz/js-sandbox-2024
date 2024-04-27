@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import {ConfigModule, ConfigService} from "@nestjs/config";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from 'node:path';
 import { UsersModule } from './users/users.module';
@@ -7,11 +6,10 @@ import { RolesModule } from './roles/roles.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import {TypeOrmModuleOptions} from "@nestjs/typeorm/dist/interfaces/typeorm-options.interface";
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { config } from 'dotenv';
 import { AuthModule } from './auth/auth.module';
-
+import {ConfigModule, ConfigService} from "@nestjs/config";
+import { config } from 'dotenv';
 config();
-
 const configService = new ConfigService();
 
 const configParams = {
