@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c1a1d318-352d-4ca3-a8d0-85a03ff25115",
+		"_postman_id": "41778c03-a2cd-4439-8568-c3cd4d68d5ec",
 		"name": "project_15_roles",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "33653699"
+		"_exporter_id": "34104660"
 	},
 	"item": [
 		{
@@ -68,11 +68,21 @@
 		{
 			"name": "Создание роли",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"role 2\",\r\n    \"theDescription\": \" the role 2\"\r\n}",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"theDescription\": \"the role test\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

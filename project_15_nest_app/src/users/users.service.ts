@@ -14,6 +14,9 @@ const configService = new ConfigService();
 
 const saltOrRounds = +configService.get('PASSWORD_HASH_SALT_OR_ROUNDS', 10);
 
+const ROLE_USER_NAME = 'user';
+const ROLE_ADMIN_NAME = 'admin';
+
 @Injectable()
 export class UsersService {
 
@@ -26,7 +29,32 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await bcrypt.hash(createUserDto.password, saltOrRounds);
-    const createdUser = await this.userRepo.save(createUserDto);
+
+    let adminRole = await this.roleRepo.findOne({
+      where: { name: ROLE_ADMIN_NAME }
+    });
+
+    if(!adminRole) {
+      adminRole = await this.roleRepo.save({name: ROLE_ADMIN_NAME});
+    }
+
+    let userRole = await this.roleRepo.findOne({
+      where: { name: ROLE_USER_NAME }
+    });
+
+    if(!userRole) {
+      userRole = await this.roleRepo.save({name: ROLE_USER_NAME});
+    }
+
+    const newUser = {...createUserDto};
+    newUser['roles'] = [userRole];
+
+    // FIXME: Remove this in production!
+    if(createUserDto.login === 'admin') {
+      newUser['roles'].push(adminRole);
+    }
+
+    const createdUser = await this.userRepo.save(newUser);
     delete createdUser.password;
     return createdUser;
   }
