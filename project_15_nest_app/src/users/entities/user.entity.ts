@@ -1,18 +1,26 @@
-import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
-import {Role} from "../../roles/entities/role.entity";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Role } from '../../roles/entities/role.entity';
 
-@Entity()
+@Entity({
+  schema: 'typeorm',
+})
 export class User {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({unique: true})
-    login: string;
+  @Column({ unique: true })
+  login: string;
 
-    @Column({select: false})
-    password: string;
+  @Column({ select: false })
+  password: string;
 
-    @ManyToMany(() => Role, (role) => role.users)
-    @JoinTable()
-    roles: Role[];
+  @ManyToMany(() => Role, (role) => role.users)
+  @JoinTable()
+  roles: Role[];
 }

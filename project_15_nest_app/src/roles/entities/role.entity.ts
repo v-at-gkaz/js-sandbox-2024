@@ -1,17 +1,19 @@
-import {Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
-import {User} from "../../users/entities/user.entity";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
-@Entity()
+@Entity({
+  schema: 'typeorm',
+})
 export class Role {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column({ nullable: true })
-    theDescription: string;
+  @Column({ nullable: true })
+  theDescription: string;
 
-    @ManyToMany(() => User, (user) => user.roles)
-    users: User[];
+  @ManyToMany(() => User, (user) => user.roles)
+  users: User[];
 }
