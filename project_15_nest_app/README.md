@@ -1,40 +1,15 @@
+# Description
 
-## Description
+## Изменения 11.05.2024
 
-...
+### Добавлен модуль (ресурс, в терминах nestjs (ng g res...)) posts
+Сгенерирован уже изученным способом через ng g res
 
-## Installation
+### В этот модуль были добавлены 3 сущности, полученные автоматически посредством
+https://www.npmjs.com/package/typeorm-model-generator
 
-```bash
-$ npm install
-```
+В сервисе этого модуля реализовано получение всех постов средствами TypeORM
 
-## Running the app
+### Важно обратить внимание
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+для работы сущностей пользователей и ролей в их описании используется нестандартная схема -- typeorm (её нужно создать вручную в базе данных рядом со схемой public)

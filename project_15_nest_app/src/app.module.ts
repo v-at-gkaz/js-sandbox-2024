@@ -31,7 +31,7 @@ const ormConfig: TypeOrmModuleOptions = {
   password: configService.get('NODEAPP_PASS', '123456'),
   database: configService.get('NODEAPP_DB', 'db'),
   entities: [join(__dirname, '**', '*.entity{.ts,.js}')],
-  synchronize: true,
+ // synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
 };
 
