@@ -9,7 +9,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
-import { PostsModule } from './posts/posts.module';
+// import { PostsModule } from '../draft/posts/posts.module';
 config();
 const configService = new ConfigService();
 
@@ -23,15 +23,16 @@ const staticDirConfig = {
   exclude: ['/api*'],
 };
 
-const ormConfig: TypeOrmModuleOptions = {
+export const ormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   host: configService.get('NODEAPP_HOST', 'localhost'),
   port: configService.get('NODEAPP_PORT', 5432),
   username: configService.get('NODEAPP_USER', 'user'),
   password: configService.get('NODEAPP_PASS', '123456'),
   database: configService.get('NODEAPP_DB', 'db'),
+  //schema: 'typeorm',
   entities: [join(__dirname, '**', '*.entity{.ts,.js}')],
- // synchronize: true,
+  // synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
 };
 
@@ -43,7 +44,7 @@ const ormConfig: TypeOrmModuleOptions = {
     UsersModule,
     RolesModule,
     AuthModule,
-    PostsModule,
+    // PostsModule,
   ],
   controllers: [],
   providers: [],

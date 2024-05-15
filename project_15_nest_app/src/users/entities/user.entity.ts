@@ -7,15 +7,16 @@ import {
 } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 
-@Entity({
-  schema: 'typeorm',
-})
+@Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ unique: true })
   login: string;
+
+  @Column()
+  descr: string;
 
   @Column({ select: false })
   password: string;
