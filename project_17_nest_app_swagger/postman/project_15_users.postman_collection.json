@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "6bb5a97c-8eb3-45e6-871e-2cf393ebc1bc",
+		"name": "project_15_users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34104660"
+	},
+	"item": [
+		{
+			"name": "Получение всех пользователей",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/{{api_version}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"{{api_version}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение по id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/{{api_version}}/users/{{id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"{{api_version}}",
+						"users",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание пользователя",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"vladislav\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/{{api_version}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"{{api_version}}",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Изменение пользователя по его id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/{{api_version}}/users/{{id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"{{api_version}}",
+						"users",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Изменение состава ролей",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"roleIds\": [\"2629d247-e6ef-48c4-899b-93649b3ef518\", \"28064c73-447d-4f9d-af9b-a2a8b7c6e88e\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/{{api_version}}/users/assign-roles/{{id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"{{api_version}}",
+						"users",
+						"assign-roles",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление пользователя по его id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/{{api_version}}/users/{{id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"{{api_version}}",
+						"users",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
