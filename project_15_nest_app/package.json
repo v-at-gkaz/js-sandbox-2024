@@ -14,7 +14,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "typeorm": "typeorm-ts-node-commonjs -d src/migrations-data-source.ts",
-    "migration:generate": "npm run typeorm migration:generate src/migrations/example-generated",
+    "migration:generate": "npm run typeorm migration:generate src/migrations/change-user-structure",
     "migration:create": "typeorm-ts-node-commonjs migration:create src/migrations/example-created",
     "migration:show": "npm run typeorm migration:show",
     "migration:revert": "npm run typeorm migration:revert",

@@ -9,7 +9,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
-import { PostsModule } from '../posts/posts.module';
+import { PostsModule } from './posts/posts.module';
 
 config();
 const configService = new ConfigService();
@@ -33,10 +33,7 @@ export const ormConfig: TypeOrmModuleOptions = {
   database: configService.get('NODEAPP_DB', 'db'),
   schema: 'typeorm',
   entities: [join(__dirname, '**', '*.entity{.ts,.js}')],
-  //migrations: [join(__dirname, 'migrations', '*.{.ts,.js}')], // было :(
-  //                                             ^ --- всему виной вот эта точка (в принципе, очень логично: почему)
-  //                                              ¯\_(ツ)_/¯ (бывает и такое...)
-  migrations: [join(__dirname, 'migrations', '*{.ts,.js}')], // стало :)
+  migrations: [join(__dirname, 'migrations', '*{.ts,.js}')],
   // synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
 };
