@@ -20,7 +20,7 @@ const configParams = {
 };
 
 const staticDirConfig = {
-  rootPath: join(__dirname, '..', 'client', 'one', 'two', '42'),
+  rootPath: join(__dirname, '..', 'client'),
   exclude: ['/api*'],
 };
 
