@@ -26,11 +26,11 @@ const staticDirConfig = {
 
 export const ormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: configService.get('NODEAPP_HOST', 'localhost'),
-  port: configService.get('NODEAPP_PORT', 5432),
-  username: configService.get('NODEAPP_USER', 'user'),
-  password: configService.get('NODEAPP_PASS', '123456'),
-  database: configService.get('NODEAPP_DB', 'db'),
+  host: configService.get('SUBD_HOST', 'localhost'),
+  port: configService.get('SUBD_PORT', 5432),
+  username: configService.get('SUBD_USER', 'user'),
+  password: configService.get('SUBD_PASS', '123456'),
+  database: configService.get('SUBD_DB', 'db'),
   schema: 'typeorm',
   entities: [join(__dirname, '**', '*.entity{.ts,.js}')],
   migrations: [join(__dirname, 'migrations', '*{.ts,.js}')],

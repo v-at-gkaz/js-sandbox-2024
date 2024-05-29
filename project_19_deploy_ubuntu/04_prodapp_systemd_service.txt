@@ -1,0 +1,35 @@
+
+cat << 'EOF' > /etc/systemd/system/nodeapp01.service
+[Unit]
+Description=nodeapp01
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+RestartSec=3s
+WorkingDirectory=/home/user/prod_app
+ExecStart=appstart.sh
+User=user
+Group=user
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl gaemon-reload
+systemctl enable nodeapp01 (systemctl enable --now nodeapp01)
+systemctl start nodeapp01
+systemctl status nodeapp01
+systemctl stop nodeapp01
+systemctl disable nodeapp01
+
+journalctl -f -u nodeapp01
+
+
+# Jogs Optimization
+/etc/systemd/journald.conf
+#SystemMaxUse=
+SystemMaxUse=1M
+systemctl restart systemd-journald
+find /var/log/journal -name "*.journal" | xargs rm

@@ -1,0 +1,7 @@
+scp -P 22 -r .\prod_app user@192.168.1.87:/home/user/
+
+cp file1.txt /tmp/file2.txt
+scp file1.txt user@192.168.1.87:/tmp/file2.txt
+scp -P 2222 file1.txt user@192.168.1.87:/tmp/file2.txt
+scp -P 2222 -r file1.txt user@192.168.1.87:/tmp/file2.txt
+ssh -p 2222 user@192.168.1.87

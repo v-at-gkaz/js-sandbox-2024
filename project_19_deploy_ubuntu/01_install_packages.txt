@@ -1,0 +1,6 @@
+apt-get update
+apt-get dist-upgrade
+apt-get install npm postgresql postgresql-contrib language-pack-en nano netcat
+
+npm install -g n
+n lts

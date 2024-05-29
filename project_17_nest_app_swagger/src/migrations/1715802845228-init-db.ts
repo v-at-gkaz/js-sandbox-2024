@@ -1,5 +1,13 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
+import { ConfigService } from '@nestjs/config';
+import { config } from 'dotenv';
+config();
+const configService = new ConfigService();
+
+const user = configService.get('SUBD_USER', 'user');
+const db = configService.get('SUBD_DB', 'db');
+
 export class InitDb1715802845228 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
@@ -9,7 +17,7 @@ export class InitDb1715802845228 implements MigrationInterface {
             the_description character varying
         );
         
-        ALTER TABLE typeorm.role OWNER TO pguser;
+        ALTER TABLE typeorm.role OWNER TO ${user};
         
         CREATE TABLE typeorm."user" (
             id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
@@ -17,14 +25,14 @@ export class InitDb1715802845228 implements MigrationInterface {
             password character varying NOT NULL
         );
         
-        ALTER TABLE typeorm."user" OWNER TO pguser;
+        ALTER TABLE typeorm."user" OWNER TO ${user};
            
         CREATE TABLE typeorm.user_roles_role (
             user_id uuid NOT NULL,
             role_id uuid NOT NULL
         );
         
-        ALTER TABLE typeorm.user_roles_role OWNER TO pguser;
+        ALTER TABLE typeorm.user_roles_role OWNER TO ${user};
         ALTER TABLE ONLY typeorm.role ADD CONSTRAINT "PK_b36bcfe02fc8de3c57a8b2391c2" PRIMARY KEY (id);
         ALTER TABLE ONLY typeorm."user" ADD CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY (id);
         ALTER TABLE ONLY typeorm.user_roles_role ADD CONSTRAINT "PK_cbb8cdf197992a93da55155c14e" PRIMARY KEY (user_id, role_id);
