@@ -9,7 +9,7 @@ After=network-online.target
 Restart=on-failure
 RestartSec=3s
 WorkingDirectory=/home/user/prod_app
-ExecStart=appstart.sh
+ExecStart=bash appstart.sh
 User=user
 Group=user
 
@@ -17,7 +17,16 @@ Group=user
 WantedBy=multi-user.target
 EOF
 
-systemctl gaemon-reload
+cat << 'EOF' > /home/user/prod_app/appstart.sh
+#!/bin/bash
+./node_modules/typeorm/cli-ts-node-commonjs.js -d dist/migrations-data-source.js migration:run
+node dist/main.js
+EOF
+
+chown user: /home/user/prod_app/appstart.sh
+
+
+systemctl daemon-reload
 systemctl enable nodeapp01 (systemctl enable --now nodeapp01)
 systemctl start nodeapp01
 systemctl status nodeapp01
