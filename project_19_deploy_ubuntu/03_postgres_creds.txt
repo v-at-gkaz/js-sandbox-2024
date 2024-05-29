@@ -5,3 +5,7 @@ psql -U postgres -c "GRANT ALL ON DATABASE app_db TO app_user;"
 psql -U postgres -c "ALTER DATABASE app_db OWNER TO app_user;"
 psql -U postgres app_db -c "CREATE SCHEMA typeorm;"
 psql -U postgres app_db -c "GRANT ALL PRIVILEGES ON SCHEMA typeorm TO app_user;"
+
+# CHECK
+psql -U app_user app_db -c "\l"
+psql -U app_user -h localhost -W app_db -c "\l"
