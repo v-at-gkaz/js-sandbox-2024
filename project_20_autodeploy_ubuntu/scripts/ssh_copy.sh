@@ -1,0 +1,1 @@
+scp -i ssh_key install.sh prod_app.tar root@192.168.1.87:/home/user/
