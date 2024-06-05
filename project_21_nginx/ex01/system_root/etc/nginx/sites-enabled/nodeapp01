@@ -1,0 +1,33 @@
+server {
+	listen 80 default_server;
+	server_name _;
+
+	root /var/www/html;
+	index index.html;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+
+	location /api/ {
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://127.0.0.1:8080;
+		proxy_set_header Upgrade $http_upgrade; # Actual for websocket proxy
+		proxy_set_header Connection "upgrade";  # Actual for websocket proxy
+		proxy_http_version	1.1;		# Actual for websocket proxy
+	}
+	        # /plapi/qwertyu/dfsdf/gfh/hjhj
+	location ~ plapi/(.*) {
+		proxy_set_header Host $host;
+		proxy_set_header My-Custom-Header 'Super-Header';
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_pass http://127.0.0.1:8081/api/$1; # ($1=qwertyu/dfsdf/gfh/hjhj)
+		proxy_set_header Upgrade $http_upgrade; # Actual for websocket proxy
+		proxy_set_header Connection "upgrade";  # Actual for websocket proxy
+		proxy_http_version	1.1;		# Actual for websocket proxy
+	}
+
+}
