@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  postgres:
+    container_name: postgres
+    hostname: postgres
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=pgPass
+      - POSTGRES_DB=db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+  app:
+    container_name: app
+    hostname: app
+    build: application
+    restart: always
+    environment:
+      - SERVER_PORT=8080
+      - SUBD_HOST=postgres
+      - SUBD_PORT=5432
+      - SUBD_DB=db
+      - SUBD_USER=pguser
+      - SUBD_PASS=pgPass
+      - PASSWORD_HASH_SALT_OR_ROUNDS=15
+      - JWT_SECRET=dfgergergergergreg
+      - JWT_EXPIRES_IN=9h
+    ports:
+      - 8078:8080

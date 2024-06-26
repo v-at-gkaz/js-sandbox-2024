@@ -12,7 +12,6 @@ COPY init_pg.sh /srv/app/init_pg.sh
 COPY start.sh /srv/app/start.sh
 RUN chmod +x /srv/app/*.sh
 WORKDIR /srv/app
-RUN useradd -ms /bin/bash postgres
 RUN ./init_pg.sh
 RUN npm install
 CMD ./start.sh
