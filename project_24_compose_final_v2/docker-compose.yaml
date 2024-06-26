@@ -1,6 +1,30 @@
 version: '3.1'
 
 services:
+  frontend:
+    container_name: frontend
+    hostname: frontend
+    build: frontend
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    #command: bash -c "tail -f /dev/null" # for debug only
+  backend:
+    container_name: backend
+    hostname: backend
+    build: backend
+    restart: always
+    environment:
+      - SERVER_PORT=8080
+      - SUBD_HOST=postgres
+      - SUBD_PORT=5432
+      - SUBD_DB=db
+      - SUBD_USER=pguser
+      - SUBD_PASS=pgPass
+      - PASSWORD_HASH_SALT_OR_ROUNDS=15
+      - JWT_SECRET=dfgergergergergreg
+      - JWT_EXPIRES_IN=9h
   postgres:
     container_name: postgres
     hostname: postgres
@@ -14,20 +38,3 @@ services:
       - 5432:5432
     volumes:
       - ./data:/var/lib/postgresql/data
-  app:
-    container_name: app
-    hostname: app
-    build: application
-    restart: always
-    environment:
-      - SERVER_PORT=8080
-      - SUBD_HOST=postgres
-      - SUBD_PORT=5432
-      - SUBD_DB=db
-      - SUBD_USER=pguser
-      - SUBD_PASS=pgPass
-      - PASSWORD_HASH_SALT_OR_ROUNDS=15
-      - JWT_SECRET=dfgergergergergreg
-      - JWT_EXPIRES_IN=9h
-    ports:
-      - 8078:8080
