@@ -18,6 +18,7 @@
     "migration:create": "typeorm-ts-node-commonjs migration:create src/migrations/example-created",
     "migration:show": "npm run typeorm migration:show",
     "migration:revert": "npm run typeorm migration:revert",
+    "create_schema_typeorm_in_pg": "docker exec -it postgres bash -c \"psql -Upguser db -c \\\"CREATE SCHEMA typeorm;\\\"\";docker exec -it postgres bash -c \"psql -Upguser db -c \\\"GRANT ALL PRIVILEGES ON SCHEMA typeorm TO pguser;\\\"\"",
     "migration:run": "npm run typeorm migration:run",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
