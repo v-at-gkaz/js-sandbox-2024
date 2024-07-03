@@ -1,0 +1,25 @@
+<div class="wrapper">
+
+  <h2>Список пользователей</h2>
+
+  <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+      <td>id</td>
+      <td>name</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.id}}</td>
+      <td>{{user.login}}</td>
+    </tr>
+    </tbody>
+  </table>
+<!--  <br />
+  <br />
+  <b>Users list errors:</b>
+  <pre>{{result2 | json}}</pre>-->
+
+</div>
+
