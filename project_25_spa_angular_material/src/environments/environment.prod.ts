@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  apiBaseURL: '/api',
+  production: false,
+  apiBaseURL: '/api/v1.0',
   excludedAuthURLs: [
     '/api/v1.0/auth/signin',
   ],
